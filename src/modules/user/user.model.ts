@@ -1,11 +1,11 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IUser extends Document {
   name: string;
   email: string;
   passwordHash: string;
   role: 'ORG_ADMIN' | 'EMPLOYEE';
-  tenantId: Schema.Types.ObjectId;
+  tenantId: Types.ObjectId;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;

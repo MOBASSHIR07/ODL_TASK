@@ -1,10 +1,10 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IResource extends Document {
   name: string;
   type: 'MEETING_ROOM' | 'DESK' | 'DEVICE';
   bufferTime: number;
-  tenantId: Schema.Types.ObjectId;
+  tenantId: Types.ObjectId;
   isDeleted: boolean;
   createdAt: Date;
   updatedAt: Date;

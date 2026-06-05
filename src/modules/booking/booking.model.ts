@@ -1,9 +1,9 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 
 export interface IBooking extends Document {
-  tenantId: Schema.Types.ObjectId;
-  resourceId: Schema.Types.ObjectId;
-  userId: Schema.Types.ObjectId;
+  tenantId: Types.ObjectId;
+  resourceId: Types.ObjectId;
+  userId: Types.ObjectId;
   startTime: Date;
   endTime: Date;
   status: 'CONFIRMED' | 'CANCELLED';
