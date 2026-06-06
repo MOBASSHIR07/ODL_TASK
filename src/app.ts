@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/errorMiddleware.js';
 import authRoutes from './modules/auth/auth.routes.js';
+import resourceRoutes from './modules/resource/resource.routes.js';
 
 const app = express();
 
@@ -21,10 +22,10 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/resources', resourceRoutes);
 
 // Remaining routes will be added here later
 // app.use('/api/organizations', orgRoutes);
-// app.use('/api/resources', resourceRoutes);
 // app.use('/api/bookings', bookingRoutes);
 
 app.use(errorHandler);
