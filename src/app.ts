@@ -17,12 +17,12 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// Health check
+
 app.get('/', (req, res) => {
     res.status(200).json({ message: 'Booking System API is healthy 🚀' });
 });
 
-// Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/resources', resourceRoutes);
 app.use('/api/users', employeeRoutes);

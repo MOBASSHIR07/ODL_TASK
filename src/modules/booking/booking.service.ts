@@ -61,3 +61,17 @@ export const createBookingService = async (
 
   return newBooking;
 };
+
+export const getBookingsService = async (
+  tenantId: string,
+  userId: string,
+  role: 'ORG_ADMIN' | 'EMPLOYEE'
+) => {
+  const query: Record<string, any> = { tenantId };
+
+  if (role === 'EMPLOYEE') {
+    query.userId = userId;
+  }
+
+  return await Booking.find(query).populate('resourceId');
+};
