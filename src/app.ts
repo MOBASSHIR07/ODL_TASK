@@ -28,8 +28,6 @@ app.use('/api/resources', resourceRoutes);
 app.use('/api/users', employeeRoutes);
 app.use('/api/bookings', bookingRoutes);
 
-// Remaining routes will be added here later
-// app.use('/api/organizations', orgRoutes);
 
 app.use(errorHandler);
 

@@ -75,3 +75,24 @@ export const getBookingsService = async (
 
   return await Booking.find(query).populate('resourceId');
 };
+
+export const cancelBookingService = async (
+  bookingId: string,
+  tenantId: string,
+  userId: string,
+  role: 'ORG_ADMIN' | 'EMPLOYEE'
+) => {
+  const booking = await Booking.findOne({ _id: bookingId, tenantId });
+  if (!booking) {
+    throw new Error('Booking not found or unauthorized');
+  }
+
+  if (role === 'EMPLOYEE' && booking.userId.toString() !== userId) {
+    throw new Error('Unauthorized: You can only cancel your own bookings');
+  }
+
+  booking.status = 'CANCELLED';
+  await booking.save();
+
+  return booking;
+};
