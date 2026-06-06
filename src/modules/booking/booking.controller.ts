@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createBookingService, getBookingsService, cancelBookingService } from './booking.service.js';
+import { createBookingService, getBookingsService, cancelBookingService, getAvailabilityService } from './booking.service.js';
 
 export const createBookingController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -78,6 +78,37 @@ export const cancelBookingController = async (req: Request, res: Response, next:
     res.status(400).json({
       success: false,
       message: error.message || 'Failed to cancel booking',
+    });
+  }
+};
+
+export const getAvailabilityController = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const tenantId = req.user?.tenantId || req.tenantId;
+    if (!tenantId) {
+      res.status(401).json({ success: false, message: 'Unauthorized: Tenant ID missing' });
+      return;
+    }
+
+    const resourceId = (req.params.resourceId || req.params.id) as string;
+    const date = req.query.date as string;
+
+    if (!resourceId || !date) {
+      res.status(400).json({ success: false, message: 'Missing required parameters: resourceId or date' });
+      return;
+    }
+
+    const availability = await getAvailabilityService(tenantId, resourceId, date);
+
+    res.status(200).json({
+      success: true,
+      message: 'Availability retrieved successfully',
+      data: availability,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      success: false,
+      message: error.message || 'Failed to retrieve availability',
     });
   }
 };
